@@ -2,6 +2,7 @@
 
 A static archive site of films about Tibet (1919–1997). All content comes from `data/tibetan-film.xlsx`;
 the pages are generated in the browser, so no server or database is needed.
+https://skyejuacct.github.io/tibetan-film-archive/#/
 
 ## Updating the site
 1. Edit `data/tibetan-film.xlsx` (see the first sheet, 使用说明).
