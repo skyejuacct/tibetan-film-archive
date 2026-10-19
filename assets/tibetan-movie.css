@@ -1,0 +1,1584 @@
+/*
+ * Tibetan Movie 主题样式。
+ *
+ * 这个文件在 layout.phtml 里全局加载，排在 Omeka 默认的 style.css 之后，
+ * 靠后置覆盖默认样式。
+ *
+ * 配色、logo、页脚这类会变的东西走主题设置，不写死在这里
+ * （CLAUDE.md 硬约束第 2 条）。--accent 来自主题设置 accent_color，
+ * 由 view/common/theme-config.phtml 注入。
+ */
+
+:root {
+    --accent: #8b1a1a;
+
+    --ink: #241f1b;
+    --ink-muted: #6c635a;
+    --ink-faint: #978d82;
+
+    --paper: #faf8f5;
+    --paper-raised: #ffffff;
+
+    --rule: #e4ddd4;
+    --rule-strong: #cfc5b8;
+
+    --header-bg: #16120f;
+    --header-h: 4.5rem;
+    --measure: 78rem;
+}
+
+/* ---------- 基础排版 ---------- */
+
+html {
+    background: var(--paper);
+}
+
+body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Spectral, Georgia, 'Times New Roman', serif;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+    font-family: Spectral, Georgia, serif;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+a {
+    color: var(--ink);
+    text-decoration-color: var(--rule-strong);
+    text-underline-offset: .15em;
+}
+
+a:hover,
+a:focus {
+    color: var(--accent);
+}
+
+/* ---------- 顶栏 ---------- */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    margin: 0;                    /* 抵消 default 主题的 header{margin-bottom:60px} */
+    background: var(--header-bg);
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
+}
+
+.site-header .header-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: .7rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.brand a {
+    text-decoration: none;
+}
+
+.brand-title {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: #fff;
+    white-space: nowrap;
+}
+
+.brand-logo {
+    display: block;
+    max-height: 2.4rem;
+    width: auto;
+}
+
+.brand-tagline {
+    margin: .1rem 0 0;
+    font-size: .78rem;
+    color: rgba(255, 255, 255, .6);
+    white-space: nowrap;
+}
+
+/* 导航 */
+
+.site-nav {
+    flex: 1;
+}
+
+.site-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 1.6rem;
+}
+
+.site-nav a {
+    display: inline-block;
+    padding: .2rem 0;
+    font-size: .98rem;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    color: rgba(255, 255, 255, .82);
+}
+
+.site-nav a:hover,
+.site-nav .active > a {
+    color: #fff;
+    border-bottom-color: #fff;
+}
+
+/* 顶栏搜索 */
+
+.header-search {
+    position: relative;
+    flex: 0 1 22rem;
+    display: flex;
+    align-items: center;
+}
+
+.header-search .o-icon-search {
+    position: absolute;
+    left: .7rem;
+    color: rgba(255, 255, 255, .5);
+    pointer-events: none;
+}
+
+.header-search input {
+    width: 100%;
+    padding: .45rem .7rem .45rem 2.1rem;
+    border: 1px solid rgba(255, 255, 255, .14);
+    border-radius: 2px;
+    background: rgba(255, 255, 255, .07);
+    font-family: inherit;
+    font-size: .9rem;
+    color: #fff;
+}
+
+.header-search input::placeholder {
+    color: rgba(255, 255, 255, .45);
+}
+
+.header-search input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, .3);
+}
+
+#mobile-nav-toggle {
+    display: none;
+}
+
+/* ---------- 页面 hero ---------- */
+
+.page-hero {
+    position: relative;
+    margin-bottom: 2.5rem;
+    padding: clamp(2.5rem, 7vw, 5rem) 1.5rem;
+    background-color: #2a2420;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    overflow: hidden;
+}
+
+.page-hero .hero-inner {
+    position: relative;
+    max-width: var(--measure);
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem 3rem;
+}
+
+.page-hero .hero-title {
+    margin: 0;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    line-height: 1;
+    color: #fff;
+}
+
+.page-hero .hero-subtitle {
+    margin: .7rem 0 0;
+    max-width: 34rem;
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, .88);
+}
+
+.page-hero .hero-quote {
+    max-width: 22rem;
+    text-align: right;
+    font-style: italic;
+    font-size: .95rem;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, .9);
+}
+
+.page-hero .hero-quote::after {
+    content: '';
+    display: block;
+    width: 3.5rem;
+    height: 2px;
+    margin: .8rem 0 0 auto;
+    background: rgba(255, 255, 255, .65);
+}
+
+/* ---------- 内容容器 ---------- */
+
+#content {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 0 1.5rem 4rem;
+}
+
+/* 横幅铺满 #content 的整个宽度（抵消掉容器的横向内边距）。
+ * 下面的正文要跟着一起宽到这个尺寸，否则横幅看起来比正文宽出一圈。
+ * 统一用 .full-measure 这个类做，见下。 */
+#content > .page-hero {
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+}
+
+/* 和横幅同宽：抵消 #content 的横向内边距，占满 --measure。
+ * 谁要和横幅对齐就加这个类（首页的入口卡片、列表页的三栏布局）。
+ * 内部文字的缩进由各自的内边距负责，不要靠这个类。 */
+.full-measure {
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+}
+
+.site-footer {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+    border-top: 1px solid var(--rule);
+    font-size: .88rem;
+    color: var(--ink-muted);
+}
+
+@media screen and (max-width: 900px) {
+    .site-header .header-inner {
+        flex-wrap: wrap;
+        gap: .75rem 1.25rem;
+    }
+    .site-nav {
+        order: 3;
+        flex-basis: 100%;
+    }
+    .site-nav ul {
+        gap: 1.1rem;
+        overflow-x: auto;
+    }
+    .header-search {
+        flex: 1 1 12rem;
+    }
+    .page-hero .hero-quote {
+        text-align: left;
+    }
+    .page-hero .hero-quote::after {
+        margin-left: 0;
+    }
+}
+
+/* ---------- 列表页：三栏 ---------- */
+
+.browse-layout {
+    display: grid;
+    grid-template-columns: 13.5rem minmax(0, 1fr) 15rem;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+/* 只有筛选栏和正文（没有精选区块）时，正文占满右侧 */
+.browse-layout:not(:has(.browse-aside)) {
+    grid-template-columns: 13.5rem minmax(0, 1fr);
+}
+
+/* ---------- 左侧筛选栏 ---------- */
+
+/* 左栏是纯文字，不是带底色的方块。整个三栏布局跟横幅一样宽（.full-measure），
+ * 所以这里要把文字推回 1.5rem，和横幅里的标题落在同一条竖线上。
+ * 规律：**方块对齐横幅的边，文字对齐横幅里的文字。** */
+.browse-filters {
+    position: sticky;
+    top: calc(var(--header-h) + 1rem);
+    padding-left: 1.5rem;
+    font-size: .9rem;
+}
+
+.filter-group {
+    margin-bottom: 1.75rem;
+}
+
+.filter-group h3 {
+    margin: 0 0 .5rem;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.filter-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 1px solid var(--rule);
+}
+
+.filter-list label {
+    display: flex;
+    align-items: baseline;
+    gap: .4rem;
+    padding: .3rem .6rem;
+    cursor: pointer;
+    color: var(--ink-muted);
+}
+
+.filter-list label:hover {
+    color: var(--ink);
+    background: rgba(0, 0, 0, .02);
+}
+
+.filter-list label.is-active {
+    color: var(--accent);
+    font-weight: 600;
+    box-shadow: inset 2px 0 0 var(--accent);
+}
+
+/* 单选/复选按钮本身隐藏，整行可点。checkbox 组保留方框。 */
+.filter-list input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.filter-list.checkbox-list input[type="checkbox"] {
+    margin: 0;
+    accent-color: var(--accent);
+}
+
+.filter-list .filter-name {
+    flex: 1;
+}
+
+.filter-list .filter-count {
+    font-size: .82rem;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+}
+
+.browse-filters .decade > summary {
+    display: flex;
+    align-items: baseline;
+    gap: .4rem;
+    padding: .3rem .6rem;
+    cursor: pointer;
+    color: var(--ink-muted);
+    list-style: none;
+}
+
+.browse-filters .decade > summary::-webkit-details-marker {
+    display: none;
+}
+
+.browse-filters .decade > summary::before {
+    content: '\203A';
+    display: inline-block;
+    width: .7rem;
+    transition: transform .15s ease;
+}
+
+.browse-filters .decade[open] > summary::before {
+    transform: rotate(90deg);
+}
+
+.browse-filters .decade .filter-list {
+    border-left: none;
+    padding-left: 1rem;
+}
+
+.filter-actions {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+}
+
+.filter-actions button {
+    padding: .35rem .8rem;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.filter-actions .clear-filter {
+    font-size: .85rem;
+    color: var(--accent);
+}
+
+/* ---------- 中间：分组 + 卡片 ---------- */
+
+.resource-group {
+    margin-bottom: 2.75rem;
+}
+
+.group-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0 0 1rem;
+    padding-left: .7rem;
+    border-left: 4px solid var(--accent);
+    font-size: 1.6rem;
+}
+
+.group-heading .view-all {
+    font-size: .88rem;
+    font-weight: 400;
+    color: var(--accent);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.group-heading .view-all:hover {
+    text-decoration: underline;
+}
+
+.card-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
+    gap: 1.5rem 1.25rem;
+}
+
+.resource-card {
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    padding: .6rem .6rem .8rem;
+}
+
+.card-link {
+    display: block;
+    text-decoration: none;
+}
+
+.card-thumb {
+    display: block;
+    position: relative;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    background: #1d1a17;
+}
+
+.card-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* 没有海报时的占位块 */
+.card-thumb.is-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .2rem;
+    padding: .8rem;
+    background: linear-gradient(160deg, #2e2722, #453a31);
+    color: rgba(255, 255, 255, .92);
+    text-align: center;
+}
+
+.placeholder-initial {
+    font-size: 2rem;
+    line-height: 1;
+    opacity: .5;
+}
+
+.placeholder-title {
+    font-size: .78rem;
+    line-height: 1.3;
+    opacity: .85;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.card-title {
+    display: block;
+    margin-top: .55rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--ink);
+}
+
+.card-link:hover .card-title {
+    color: var(--accent);
+}
+
+.resource-card p {
+    margin: .1rem 0 0;
+    font-size: .82rem;
+    line-height: 1.35;
+    color: var(--ink-muted);
+}
+
+.resource-card .card-year {
+    color: var(--ink-faint);
+}
+
+.no-resources {
+    color: var(--ink-muted);
+    font-style: italic;
+}
+
+/* ---------- 右侧：精选 ---------- */
+
+.browse-aside {
+    position: sticky;
+    top: calc(var(--header-h) + 1rem);
+}
+
+@media screen and (max-width: 1100px) {
+    .browse-layout,
+    .browse-layout:not(:has(.browse-aside)) {
+        grid-template-columns: 12rem minmax(0, 1fr);
+    }
+    .browse-aside {
+        grid-column: 1 / -1;
+        position: static;
+    }
+}
+
+@media screen and (max-width: 760px) {
+    .browse-layout,
+    .browse-layout:not(:has(.browse-aside)) {
+        grid-template-columns: 1fr;
+    }
+    .browse-filters {
+        position: static;
+        /* 窄屏下 .full-measure 已经失效，布局回到 #content 的内边距里，
+         * 这里就不用再推 1.5rem 了，否则筛选栏比正文多缩一截 */
+        padding-left: 0;
+    }
+}
+
+/* ---------- 右侧精选卡片 ---------- */
+
+.browse-aside .block {
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    padding: .9rem;
+}
+
+.browse-aside h3 {
+    margin: 0 0 .7rem;
+    font-size: 1.05rem;
+}
+
+.browse-aside img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* ---------- Featured Film 侧栏卡片 ---------- */
+
+.featured-card {
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+    padding: .9rem;
+}
+
+.featured-heading {
+    margin: 0 0 .7rem;
+    font-size: 1.05rem;
+}
+
+.featured-thumb {
+    display: block;
+    position: relative;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+    background: #1d1a17;
+    text-decoration: none;
+}
+
+.featured-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.featured-thumb.is-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .3rem;
+    padding: 1rem;
+    background: linear-gradient(160deg, #2e2722, #453a31);
+    color: rgba(255, 255, 255, .92);
+    text-align: center;
+}
+
+.featured-title {
+    margin: .6rem 0 0;
+    font-size: 1rem;
+    line-height: 1.25;
+}
+
+.featured-title a {
+    text-decoration: none;
+}
+
+.featured-original,
+.featured-year {
+    margin: .1rem 0 0;
+    font-size: .82rem;
+    color: var(--ink-muted);
+}
+
+.featured-blurb {
+    margin: .75rem 0 0;
+    padding-top: .7rem;
+    border-top: 1px solid var(--rule);
+    font-style: italic;
+    font-size: .86rem;
+    line-height: 1.5;
+    color: var(--ink-muted);
+}
+
+.featured-blurb::after {
+    content: '';
+    display: block;
+    width: 3rem;
+    height: 2px;
+    margin-top: .8rem;
+    background: var(--accent);
+}
+
+/* ==========================================================================
+   首页
+   ========================================================================== */
+
+.brand-script {
+    margin: .15rem 0 0;
+    font-size: .95rem;
+    line-height: 1.4;
+    color: var(--ink-muted);
+}
+
+/* ---------- 首页横幅 ---------- */
+
+/* 横幅铺满 #content 的宽度。下面的入口卡片用 .full-measure 跟上来对齐。
+ * 横幅里的文字靠自己的 1.5rem 内边距缩进，和引语区的文字在同一条竖线上。 */
+.home-hero {
+    margin: 0 -1.5rem 0;
+    padding: clamp(3rem, 8vw, 6rem) 1.5rem clamp(3.5rem, 9vw, 7rem);
+    background-color: #1b1714;
+    color: #fff;
+}
+
+.home-hero.has-background {
+    background-size: cover;
+    background-position: center;
+}
+
+.home-hero-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+}
+
+.hero-rule {
+    display: block;
+    width: 2.6rem;
+    height: 2px;
+    margin-bottom: 1.4rem;
+    background: rgba(255, 255, 255, .75);
+}
+
+.home-title {
+    margin: 0;
+    max-width: 22ch;
+    font-size: clamp(2.4rem, 6vw, 4.2rem);
+    line-height: 1.05;
+    color: #fff;
+}
+
+.home-subtitle {
+    margin: 1rem 0 0;
+    max-width: 30rem;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, .9);
+}
+
+.home-subtitle p {
+    margin: 0;
+}
+
+.home-script {
+    margin: 1.6rem 0 0;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, .85);
+}
+
+/* ---------- 入口卡片 ---------- */
+
+.home-template .blocks,
+.home-template > .block {
+    max-width: none;
+}
+
+/* 横向边距交给 .full-measure（见「内容容器」一节），这里只管上下。
+ * 写成 margin: X auto 的话会覆盖掉 .full-measure 的负边距 ——
+ * 两者都是单个类选择器，谁在文件里靠后谁赢。 */
+.home-entries {
+    list-style: none;
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: 1.5rem;
+}
+
+.home-entry .entry-link {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: 28rem;
+    /* 横向 1.5rem 和横幅的内边距一致，卡片标题和横幅大标题落在同一条竖线上 */
+    padding: 2rem 1.5rem 3.5rem;
+    overflow: hidden;
+    background: #241f1b;
+    color: #fff;
+    text-decoration: none;
+    isolation: isolate;
+}
+
+.home-entry .entry-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+}
+
+/* 图片上的渐变，保证标题和说明文字可读 */
+.home-entry .entry-link::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(to bottom, rgba(12, 10, 8, .72) 0%, rgba(12, 10, 8, .45) 45%, rgba(12, 10, 8, .6) 100%);
+}
+
+.home-entry .entry-title {
+    display: block;
+    font-size: 1.9rem;
+    font-weight: 700;
+    line-height: 1.12;
+    color: #fff;
+}
+
+.home-entry .entry-rule {
+    display: block;
+    width: 2.2rem;
+    height: 2px;
+    margin: .9rem 0 1rem;
+    background: rgba(255, 255, 255, .8);
+}
+
+.home-entry .entry-caption {
+    display: block;
+    max-width: 18rem;
+    font-size: .95rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, .88);
+}
+
+.home-entry .entry-arrow {
+    position: absolute;
+    left: 1.75rem;
+    bottom: 1.6rem;
+    font-size: 1.4rem;
+    color: #fff;
+    transition: transform .18s ease;
+}
+
+.home-entry .entry-link:hover .entry-arrow {
+    transform: translateX(.35rem);
+}
+
+.home-entry.no-image .entry-link {
+    background: linear-gradient(160deg, #2e2722, #453a31);
+}
+
+/* ---------- 引语区 ---------- */
+
+.quote-section {
+    max-width: var(--measure);
+    margin: 4rem auto 5rem;
+    padding: 0 0 3rem;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 3rem;
+}
+
+.pull-quote {
+    margin: 0;
+    max-width: 34rem;
+    font-size: clamp(1.25rem, 2.6vw, 1.75rem);
+    font-style: italic;
+    line-height: 1.45;
+    color: var(--ink);
+}
+
+.quote-rule {
+    display: block;
+    width: 4rem;
+    height: 1px;
+    margin: 1.5rem 0 1rem;
+    background: var(--rule-strong);
+}
+
+.quote-tagline {
+    margin: 0;
+    font-size: .78rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+}
+
+.quote-keywords {
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 1.5rem;
+    border-left: 1px solid var(--rule);
+    text-align: right;
+    font-size: .72rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    line-height: 2;
+    white-space: nowrap;
+}
+
+/* ---------- 深色页脚 ---------- */
+
+.site-footer {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    border-top: none;
+    background: #16120f;
+    color: rgba(255, 255, 255, .62);
+}
+
+.site-footer .footer-inner {
+    max-width: var(--measure);
+    margin: 0 auto;
+    padding: 1.6rem 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem 2rem;
+    font-size: .85rem;
+}
+
+.site-footer .footer-text p {
+    margin: 0;
+}
+
+.site-footer .footer-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.4rem;
+}
+
+.site-footer a {
+    color: rgba(255, 255, 255, .78);
+    text-decoration: none;
+}
+
+.site-footer a:hover {
+    color: #fff;
+}
+
+@media screen and (max-width: 760px) {
+    .quote-section {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .quote-keywords {
+        padding: 1rem 0 0;
+        border-left: none;
+        border-top: 1px solid var(--rule);
+        text-align: left;
+    }
+    .home-entry .entry-link {
+        min-height: 20rem;
+    }
+    /* 窄屏上 .full-measure 会让卡片顶到视口边缘。卡片自己有内边距不要紧，
+     * 但引语区之类的纯文字块会贴边，所以窄屏下收回来。 */
+    .full-measure {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+/* ---------- 藏文 ----------
+ * Spectral 不含藏文字形，不指定的话会退回系统字体（Windows 的 Microsoft Himalaya、
+ * macOS 的 Kailasa），Linux / Android 上可能是方块。
+ * 藏文字符上下叠加的部件多，行高要比拉丁文宽松，否则会切掉元音符号。 */
+
+[lang="bo"] {
+    font-family: 'Noto Serif Tibetan', 'Microsoft Himalaya', Kailasa, 'Jomolhari', serif;
+    line-height: 2;
+}
+
+.home-script[lang="bo"] {
+    font-size: 1.15rem;
+}
+
+.brand-script[lang="bo"] {
+    font-size: .9rem;
+    line-height: 1.8;
+}
+
+/* ==========================================================================
+   清理 Omeka 默认主题 style.css 的遗留规则
+   --------------------------------------------------------------------------
+   本主题是从官方 Default 主题复制来的，layout.phtml 换了新结构但元素上仍保留
+   Omeka 的 id（#top-nav、#content 等），default 的 style.css 又在全局加载，
+   于是它针对这些 id 的规则会穿透过来。发现过的具体症状：
+
+     - header{margin-bottom:60px}  在顶栏下方留出 60px 空隙
+     - #top-nav::before            画一条 left/right:-9999px 的通栏白条，
+                                   盖在深色顶栏上，看起来像一行空白
+     - #top-nav::after / border    多出一条浅色分隔线
+
+   这些都只在 min-width:800px 的媒体查询里，所以窄屏看不出来。
+   ========================================================================== */
+
+header {
+    margin-bottom: 0;
+}
+
+#top-nav,
+#top-nav::before,
+#top-nav::after,
+.site-title::before,
+.site-title::after {
+    background: none;
+    border: 0;
+    padding: 0;
+    content: none;
+}
+
+#search {
+    position: static;
+    width: auto;
+    transform: none;
+    margin: 0;
+}
+
+#search form {
+    display: flex;
+    padding: 0;
+    border: 0;
+    background: none;
+}
+
+
+/* ==========================================================================
+   条目详情页（影片 / 人物 / 公司）
+
+   版式照 Wireframe 的三张稿子。三页共用同一套骨架：
+       标题框 + 右上信息框  →  图片 + 正文两栏  →  若干区段
+   区别只在于左边放什么图、下面有哪些区段。
+
+   **空数据也要占位。** 海报、图片廊、参与影片、文献这四块在没有数据时
+   渲染成灰色空框而不是整块消失 —— 稿子的要求是先把版式定下来。
+   ========================================================================== */
+
+.resource-detail {
+    max-width: 62rem;
+    margin: 0 auto;
+    padding-top: 1.5rem;
+}
+
+/* ---------- 面包屑 ---------- */
+
+.breadcrumb {
+    margin-bottom: 1.75rem;
+    font-size: .85rem;
+    color: var(--ink-faint);
+}
+
+.breadcrumb ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+}
+
+.breadcrumb li + li::before {
+    content: "\203A";
+    margin-right: .4rem;
+    color: var(--ink-faint);
+}
+
+.breadcrumb a {
+    color: var(--ink-muted);
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    color: var(--accent);
+}
+
+.breadcrumb [aria-current] {
+    color: var(--ink);
+}
+
+/* ---------- 标题框 + 右上信息框 ---------- */
+
+.detail-topbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1.1rem;
+    border-bottom: 1px solid var(--rule);
+}
+
+.detail-topbar .title-box {
+    flex: 1 1 24rem;
+    min-width: 0;
+}
+
+.detail-title {
+    margin: 0;
+    font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+    line-height: 1.12;
+}
+
+.detail-original {
+    margin: .35rem 0 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--ink-muted);
+}
+
+/* 稿子上是右上角一个描边小框，右对齐 */
+.detail-topbar .meta-box {
+    flex: 0 1 auto;
+    align-self: flex-start;
+    padding: .6rem .9rem;
+    border: 1px solid var(--rule);
+    text-align: right;
+    font-size: .85rem;
+    line-height: 1.6;
+    color: var(--ink-muted);
+}
+
+.detail-topbar .meta-box p {
+    margin: 0;
+}
+
+/* ---------- 图片 + 正文两栏 ---------- */
+
+.detail-hero {
+    display: grid;
+    grid-template-columns: minmax(12rem, 17rem) minmax(0, 1fr);
+    gap: 2.25rem;
+    align-items: start;
+    margin-bottom: 3rem;
+}
+
+.detail-hero .hero-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+}
+
+/* ---------- 图片占位框 ----------
+ * 还没有素材的位置。稿子上画的是黑块，这里用和页面同调的浅灰，
+ * 免得几个空框在暖白底上重得像故障。 */
+
+.media-placeholder {
+    display: block;
+    width: 100%;
+    background: rgba(0, 0, 0, .05);
+    border: 1px solid var(--rule);
+}
+
+.media-placeholder.poster {
+    aspect-ratio: 2 / 3;
+}
+
+.media-placeholder.portrait {
+    aspect-ratio: 3 / 4;
+}
+
+/* ---------- 字段列表 ---------- */
+
+.resource-fields {
+    margin: 0;
+}
+
+.resource-fields .field {
+    display: grid;
+    grid-template-columns: 10.5rem minmax(0, 1fr);
+    gap: .5rem 1rem;
+    padding: .38rem 0;
+}
+
+/* 稿子上主创和事实是两组，中间隔一条线 */
+.resource-fields.facts {
+    margin-top: 1.1rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--rule);
+}
+
+.resource-fields dt {
+    margin: 0;
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    line-height: 1.7;
+}
+
+.resource-fields dd {
+    margin: 0;
+}
+
+.resource-fields .no-value {
+    color: var(--ink-faint);
+}
+
+/* ---------- Introduction / Biography ----------
+ * 没有正文时也要留出高度，不然这一块会塌掉，稿子上它是个大框。 */
+
+.detail-introduction {
+    margin-top: 1.4rem;
+    padding-top: 1.2rem;
+    min-height: 7rem;
+    border-top: 1px solid var(--rule);
+    line-height: 1.7;
+}
+
+/* 公司页：Introduction 紧接在标题框下面，标题框已经有一条分隔线了，
+ * 这里再来一条就成了双线。 */
+.detail-introduction.full-width {
+    margin: 0 0 3rem;
+    padding-top: 0;
+    min-height: 13rem;
+    border-top: 0;
+}
+
+/* 人物页：国籍没填时右栏第一个元素就是 Biography，
+ * 上面没有字段可分隔，那条线要去掉。 */
+.hero-content > .detail-introduction:first-child {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+}
+
+.intro-label {
+    margin: 0 0 .6rem;
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+}
+
+.detail-introduction p {
+    margin: 0 0 .8rem;
+}
+
+.detail-introduction p:last-child {
+    margin-bottom: 0;
+}
+
+/* ---------- 区段标题（红竖条 + 右侧动作链接） ---------- */
+
+.detail-section {
+    margin-bottom: 3rem;
+}
+
+.section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.1rem;
+}
+
+.section-title {
+    margin: 0;
+    padding-left: .7rem;
+    border-left: 4px solid var(--accent);
+    font-size: 1.4rem;
+    line-height: 1.2;
+}
+
+.section-action {
+    font-size: .88rem;
+    color: var(--accent);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.section-action:hover {
+    text-decoration: underline;
+}
+
+/* ---------- 图片廊 ---------- */
+
+.gallery-viewport {
+    position: relative;
+}
+
+.gallery-strip {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: .85rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+}
+
+.gallery-strip li {
+    flex: 0 0 11.5rem;
+    scroll-snap-align: start;
+}
+
+.gallery-strip img {
+    display: block;
+    width: 100%;
+    height: 8.5rem;
+    object-fit: cover;
+}
+
+/* 空位：稿子上是一排等宽方块，铺满整行 */
+.gallery-strip.is-empty {
+    overflow-x: hidden;
+}
+
+.gallery-strip.is-empty li {
+    flex: 1 1 0;
+}
+
+.gallery-strip.is-empty .media-placeholder {
+    height: 8.5rem;
+}
+
+.gallery-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 2.2rem;
+    height: 2.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: 1px solid var(--rule);
+    border-radius: 50%;
+    background: var(--paper-raised);
+    font-size: 1.3rem;
+    line-height: 1;
+    color: var(--ink-muted);
+    cursor: pointer;
+}
+
+.gallery-nav.prev { left: -1.1rem; }
+.gallery-nav.next { right: -1.1rem; }
+
+.gallery-nav:disabled {
+    opacity: .3;
+    cursor: default;
+}
+
+/* ---------- 学术文献 ---------- */
+
+.scholarship-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .7rem;
+}
+
+.scholarship-entry {
+    display: grid;
+    grid-template-columns: 3rem minmax(0, 1fr) auto;
+    gap: 1rem;
+    align-items: center;
+    padding: .9rem 1.1rem;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+}
+
+.scholarship-icon {
+    width: 2.4rem;
+    height: 2.9rem;
+    border: 1px solid var(--rule-strong);
+    position: relative;
+}
+
+/* 文档图标：三条横线示意正文 */
+.scholarship-icon::before {
+    content: "";
+    position: absolute;
+    left: .45rem;
+    right: .45rem;
+    top: .7rem;
+    height: 1px;
+    background: var(--rule-strong);
+    box-shadow: 0 .45rem 0 var(--rule-strong), 0 .9rem 0 var(--rule-strong);
+}
+
+.scholarship-title {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.35;
+}
+
+.scholarship-title a {
+    text-decoration: none;
+}
+
+.scholarship-meta {
+    margin: .2rem 0 0;
+    font-size: .85rem;
+    color: var(--ink-muted);
+}
+
+.scholarship-meta .journal {
+    font-style: italic;
+}
+
+.scholarship-meta .author + .journal::before {
+    content: "\B7";
+    margin: 0 .4rem;
+    font-style: normal;
+    color: var(--ink-faint);
+}
+
+.scholarship-year {
+    margin: .1rem 0 0;
+    font-size: .85rem;
+    color: var(--ink-faint);
+}
+
+.scholarship-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: .35rem;
+    padding-left: 1.1rem;
+    border-left: 1px solid var(--rule);
+    font-size: .85rem;
+}
+
+.scholarship-links a,
+.scholarship-links summary {
+    color: var(--accent);
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.scholarship-links summary {
+    list-style: none;
+}
+
+.scholarship-links summary::-webkit-details-marker {
+    display: none;
+}
+
+.scholarship-links .citation p {
+    margin: .4rem 0 0;
+    max-width: 22rem;
+    font-size: .82rem;
+    line-height: 1.5;
+    color: var(--ink-muted);
+    white-space: normal;
+}
+
+/* ---------- Related to other films ---------- */
+
+.filmography-group {
+    margin-bottom: 1.4rem;
+}
+
+.filmography .role {
+    margin: 0 0 .5rem;
+    font-size: .75rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+}
+
+.film-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: .6rem;
+}
+
+.film-entry {
+    display: grid;
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    gap: .9rem;
+    align-items: center;
+    padding: .55rem .7rem;
+    background: var(--paper-raised);
+    border: 1px solid var(--rule);
+}
+
+.film-thumb {
+    display: block;
+}
+
+.film-thumb img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.film-thumb .media-placeholder {
+    height: 4.5rem;
+}
+
+.film-title a {
+    text-decoration: none;
+}
+
+.film-original,
+.film-credit {
+    font-size: .82rem;
+    color: var(--ink-muted);
+}
+
+/* ---------- 空占位条目（文献 / 参与影片） ----------
+ * 用几条灰杠示意将来会有的文字。比留一片全空好读，
+ * 也不容易被误认为「加载失败」。 */
+
+.scholarship-entry.placeholder,
+.film-entry.placeholder {
+    background: rgba(0, 0, 0, .02);
+}
+
+.scholarship-entry.placeholder .scholarship-icon {
+    border-color: var(--rule);
+}
+
+.scholarship-entry.placeholder .scholarship-icon::before {
+    background: var(--rule);
+    box-shadow: 0 .45rem 0 var(--rule), 0 .9rem 0 var(--rule);
+}
+
+.film-entry.placeholder .film-thumb {
+    height: 4.5rem;
+}
+
+.placeholder .line {
+    display: block;
+    height: .6rem;
+    background: rgba(0, 0, 0, .07);
+}
+
+.placeholder .line + .line {
+    margin-top: .45rem;
+    background: rgba(0, 0, 0, .05);
+}
+
+.placeholder .line-title {
+    width: 45%;
+    height: .75rem;
+}
+
+.placeholder .line-meta,
+.placeholder .line-original {
+    width: 30%;
+}
+
+.placeholder .line-cite,
+.placeholder .line-credit {
+    width: 22%;
+}
+
+/* ---------- 窄屏 ---------- */
+
+@media screen and (max-width: 820px) {
+    .detail-hero {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .detail-hero .hero-image {
+        max-width: 16rem;
+    }
+    .resource-fields .field {
+        grid-template-columns: minmax(0, 1fr);
+        gap: .1rem;
+    }
+    .detail-topbar .meta-box {
+        text-align: left;
+    }
+    .scholarship-entry {
+        grid-template-columns: 3rem minmax(0, 1fr);
+    }
+    .scholarship-links {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: .6rem 0 0;
+        border-left: 0;
+        border-top: 1px solid var(--rule);
+    }
+    .gallery-nav {
+        display: none;
+    }
+    /* 空位平铺在窄屏会压得太扁，改回可滑动的固定宽度 */
+    .gallery-strip.is-empty {
+        overflow-x: auto;
+    }
+    .gallery-strip.is-empty li {
+        flex: 0 0 9rem;
+    }
+}

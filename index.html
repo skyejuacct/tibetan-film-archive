@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tibetan Moving-Image Archive</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Serif+Tibetan:wght@400;600&display=swap">
+    <!-- 顺序不能换：style.css 是 Omeka Default 主题的底子，tibetan-movie.css 覆盖它，site.css 是静态版补充 -->
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/tibetan-movie.css">
+    <link rel="stylesheet" href="assets/site.css">
+</head>
+<body class="page">
+    <a id="skipnav" href="#content">Skip to main content</a>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <a href="#/"><span class="brand-title" data-setting="Site Title"></span></a>
+                <p class="brand-tagline" data-setting="Tagline"></p>
+            </div>
+            <nav class="site-nav" id="top-nav">
+                <ul class="navigation" data-nav></ul>
+            </nav>
+            <form class="header-search" id="search-form" role="search" aria-label="Search">
+                <svg class="o-icon-search" aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg>
+                <input type="text" id="fulltext-search" name="q" placeholder="Search films, people, companies…" aria-label="Query">
+            </form>
+        </div>
+    </header>
+
+    <div id="content" role="main">
+        <p class="site-status">Loading…</p>
+        <noscript><p class="site-status">This site needs JavaScript to display the archive.</p></noscript>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-text"><p data-setting="Footer"></p></div>
+            <nav class="footer-nav"><ul class="navigation" data-nav></ul></nav>
+        </div>
+    </footer>
+
+    <script src="vendor/xlsx.mini.min.js"></script>
+    <script src="assets/app.js"></script>
+</body>
+</html>

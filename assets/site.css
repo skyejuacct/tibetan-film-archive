@@ -1,0 +1,77 @@
+/* 静态版补充：Omeka 主题里没有、但静态版需要的几条规则。 */
+
+.site-status {
+    padding: 3rem 1.5rem;
+    color: var(--ink-muted, #6b625a);
+}
+
+.no-results {
+    padding: 2rem 0;
+    color: var(--ink-muted, #6b625a);
+}
+
+/* 图片和占位块叠放：有图时图盖住占位，加载失败时图被移除，占位自然露出 */
+.card-thumb img,
+.featured-thumb img {
+    position: absolute;
+    inset: 0;
+}
+
+.hero-poster {
+    position: relative;
+}
+
+.hero-poster .media-placeholder {
+    display: block;
+}
+
+.hero-poster.poster .media-placeholder {
+    aspect-ratio: 2 / 3;
+}
+
+.hero-poster.portrait .media-placeholder {
+    aspect-ratio: 3 / 4;
+}
+
+.hero-poster img {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--rule);
+    background: #fff;
+}
+
+.film-thumb {
+    position: relative;
+}
+
+.film-thumb img {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    height: 100%;
+    object-fit: cover;
+}
+
+.filmography-group .film-list.is-empty .film-entry {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.featured-note {
+    margin: .4rem 0 0;
+    font-size: .9rem;
+    color: var(--ink-muted, #6b625a);
+}
+
+/* 不显示图片时：详情页正文占满整行，列表卡片只剩文字 */
+.detail-hero.no-image {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+.film-entry.no-thumb {
+    display: block;
+}
