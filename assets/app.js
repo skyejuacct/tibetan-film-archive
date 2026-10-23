@@ -187,15 +187,6 @@
             listName + '">' + esc(listTitle(listName)) + '</a></li><li aria-current="page">' + esc(title) + '</li></ol></nav>';
     }
 
-    function quoteSection() {
-        if (!setting('Quote')) return '';
-        var kws = split(setting('Quote Keywords').replace(/,/g, ';'));
-        return '<section class="quote-section"><div class="quote-main"><blockquote class="pull-quote">&ldquo;' + esc(setting('Quote')) +
-            '&rdquo;</blockquote><span class="quote-rule" aria-hidden="true"></span><p class="quote-tagline">' + esc(setting('Tagline')) + '</p></div>' +
-            (kws.length ? '<ul class="quote-keywords">' + kws.map(function (k) { return '<li>' + esc(k) + '</li>'; }).join('') + '</ul>' : '') +
-            '</section>';
-    }
-
     function paragraphs(text) {
         return str(text).split(/\n+/).map(function (p) { return '<p>' + esc(p) + '</p>'; }).join('');
     }
@@ -281,15 +272,13 @@
         markNav('');
         var entries = Object.keys(LISTS).map(function (name) {
             return '<li class="home-entry no-image"><a class="entry-link" href="#/' + name + '"><span class="entry-body"><span class="entry-title">' +
-                esc(listTitle(name)) + '</span><span class="entry-rule" aria-hidden="true"></span><span class="entry-caption">' +
-                esc(setting(LISTS[name].caption)) + '</span></span><span class="entry-arrow" aria-hidden="true">&rarr;</span></a></li>';
+                esc(listTitle(name)) + '</span><span class="entry-rule" aria-hidden="true"></span></span><span class="entry-arrow" aria-hidden="true">&rarr;</span></a></li>';
         }).join('');
         var bo = setting('Tibetan Line');
         return '<section class="home-hero has-background" style="' + bannerStyle(['0.7', '0.25']) + '"><div class="home-hero-inner"><span class="hero-rule" aria-hidden="true"></span>' +
             '<h1 class="home-title">' + esc(setting('Home Headline', setting('Site Title'))) + '</h1>' +
-            (setting('Home Subtitle') ? '<div class="home-subtitle"><p>' + esc(setting('Home Subtitle')) + '</p></div>' : '') +
             (bo ? '<p class="home-script" lang="bo">' + esc(bo) + '</p>' : '') + '</div></section>' +
-            '<div class="block block-asset"><ul class="home-entries full-measure">' + entries + '</ul></div>' + quoteSection();
+            '<div class="block block-asset"><ul class="home-entries full-measure">' + entries + '</ul></div>';
     }
 
     // ---------- 列表页 ----------
@@ -324,7 +313,10 @@
             var sel = selected(q, f);
             if (!sel.length) return true;
             var vals = valuesOf(rec, f);
-            if (f.kind === 'year') return sel.indexOf(str(rec[f.field])) !== -1;
+            if (f.kind === 'year') {
+                var yr = str(rec[f.field]);
+                return sel.indexOf(yr) !== -1 || (yr && sel.indexOf(decade(yr)) !== -1);
+            }
             if (f.kind === 'check') return sel.every(function (s) { return vals.indexOf(s) !== -1; });
             return sel.some(function (s) { return vals.indexOf(s) !== -1; });
         });
@@ -356,8 +348,9 @@
             years.forEach(function (y) { (byDecade[decade(y)] = byDecade[decade(y)] || []).push(y); });
             Object.keys(byDecade).sort().reverse().forEach(function (d) {
                 var total = byDecade[d].reduce(function (a, y) { return a + counts[y]; }, 0);
-                var open = byDecade[d].some(function (y) { return sel.indexOf(y) !== -1; });
-                html += '<details class="decade"' + (open ? ' open' : '') + '><summary><span class="filter-name">' + d + '</span><span class="filter-count">(' + total + ')</span></summary><ul class="filter-list">' +
+                var decadeOn = sel.indexOf(d) !== -1;
+                var open = decadeOn || byDecade[d].some(function (y) { return sel.indexOf(y) !== -1; });
+                html += '<details class="decade' + (decadeOn ? ' is-active' : '') + '"' + (open ? ' open' : '') + '><summary data-decade="' + d + '"><span class="filter-name">' + d + '</span><span class="filter-count">(' + total + ')</span></summary><ul class="filter-list">' +
                     byDecade[d].map(function (y) { return item('radio', y, y, sel.indexOf(y) !== -1, counts[y]); }).join('') + '</ul></details>';
             });
         } else {
@@ -422,34 +415,39 @@
                 sortRecs(groups[g], list.type).map(card).join('') + '</ul></section>';
         }).join('') : '<p class="no-results">No entries match these filters.</p>';
 
-        var aside = '';
-        if (name === 'films' && setting('Featured Film') && db.byId[setting('Featured Film')]) {
-            var ff = db.byId[setting('Featured Film')];
-            aside = '<aside class="browse-aside"><div class="block"><div class="featured-card"><h3 class="featured-heading">Featured Film</h3><article class="featured-item">' +
-                (showImages() ? '<a class="featured-thumb is-placeholder" href="' + href('film', ff['Record ID']) + '" data-poster>' + placeholderThumb(ff._title) + imgTag(ff['Record ID'], ff._title) + '</a>' : '') +
-                '<h4 class="featured-title"><a href="' + href('film', ff['Record ID']) + '">' + esc(ff._title) + '</a></h4>' +
-                (str(ff['Year']) ? '<p class="featured-year">' + esc(ff['Year']) + '</p>' : '') +
-                (setting('Featured Film Note') ? '<p class="featured-note">' + esc(setting('Featured Film Note')) + '</p>' : '') +
-                '</article></div></div></aside>';
-        }
-
         return '<section class="page-hero" style="' + bannerStyle(['.78', '.25']) + '"><div class="hero-inner"><div class="hero-text"><h1 class="hero-title">' + esc(listTitle(name)) +
             '</h1><div class="hero-subtitle"><p>' + esc(setting(list.subtitle)) + '</p></div></div></div></section>' +
             '<div class="browse-layout full-measure"><aside class="browse-filters"><form class="filter-form" data-list="' + name + '">' +
             list.filters.map(function (f) { return filterGroup(list, f, q); }).join('') + '</form></aside>' +
-            '<main class="browse-main">' + main + '</main>' + aside + '</div>';
+            '<main class="browse-main">' + main + '</main></div>';
+    }
+
+    // override：{ 筛选器 id: 值 }，用来替换表单里勾选的值（点十年标签时用）
+    function applyFilters(form, override) {
+        var list = LISTS[form.getAttribute('data-list')];
+        var parts = [];
+        list.filters.forEach(function (f) {
+            var vals = override && f.id in override ? [override[f.id]] :
+                Array.prototype.map.call(form.querySelectorAll('input[name="' + f.id + '"]:checked'), function (i) { return i.value; });
+            vals = vals.filter(Boolean);
+            if (vals.length) parts.push(f.id + '=' + encodeURIComponent(vals.join('|')));
+        });
+        location.hash = '#/' + form.getAttribute('data-list') + (parts.length ? '?' + parts.join('&') : '');
     }
 
     document.addEventListener('change', function (e) {
         var form = e.target.closest && e.target.closest('form.filter-form');
+        if (form) applyFilters(form);
+    });
+
+    // 点十年标签：筛选到整个年代，同时展开子年份
+    document.addEventListener('click', function (e) {
+        var sum = e.target.closest && e.target.closest('.decade > summary');
+        if (!sum) return;
+        var form = sum.closest('form.filter-form');
         if (!form) return;
-        var list = LISTS[form.getAttribute('data-list')];
-        var parts = [];
-        list.filters.forEach(function (f) {
-            var vals = Array.prototype.map.call(form.querySelectorAll('input[name="' + f.id + '"]:checked'), function (i) { return i.value; }).filter(Boolean);
-            if (vals.length) parts.push(f.id + '=' + encodeURIComponent(vals.join('|')));
-        });
-        location.hash = '#/' + form.getAttribute('data-list') + (parts.length ? '?' + parts.join('&') : '');
+        e.preventDefault();
+        applyFilters(form, { year: sum.getAttribute('data-decade') });
     });
 
     // ---------- 详情页 ----------

@@ -343,6 +343,12 @@ a:focus {
     background: rgba(0, 0, 0, .02);
 }
 
+.browse-filters .decade.is-active > summary {
+    color: var(--accent);
+    font-weight: 600;
+    box-shadow: inset 2px 0 0 var(--accent);
+}
+
 .filter-list label.is-active {
     color: var(--accent);
     font-weight: 600;
@@ -759,9 +765,9 @@ a:focus {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    min-height: 28rem;
+    min-height: 11rem;
     /* 横向 1.5rem 和横幅的内边距一致，卡片标题和横幅大标题落在同一条竖线上 */
-    padding: 2rem 1.5rem 3.5rem;
+    padding: 1.75rem 1.5rem 3.5rem;
     overflow: hidden;
     background: #241f1b;
     color: #fff;
@@ -828,57 +834,6 @@ a:focus {
     background: linear-gradient(160deg, #2e2722, #453a31);
 }
 
-/* ---------- 引语区 ---------- */
-
-.quote-section {
-    max-width: var(--measure);
-    margin: 4rem auto 5rem;
-    padding: 0 0 3rem;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 3rem;
-}
-
-.pull-quote {
-    margin: 0;
-    max-width: 34rem;
-    font-size: clamp(1.25rem, 2.6vw, 1.75rem);
-    font-style: italic;
-    line-height: 1.45;
-    color: var(--ink);
-}
-
-.quote-rule {
-    display: block;
-    width: 4rem;
-    height: 1px;
-    margin: 1.5rem 0 1rem;
-    background: var(--rule-strong);
-}
-
-.quote-tagline {
-    margin: 0;
-    font-size: .78rem;
-    letter-spacing: .18em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-}
-
-.quote-keywords {
-    list-style: none;
-    margin: 0;
-    padding: 0 0 0 1.5rem;
-    border-left: 1px solid var(--rule);
-    text-align: right;
-    font-size: .72rem;
-    letter-spacing: .22em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    line-height: 2;
-    white-space: nowrap;
-}
-
 /* ---------- 深色页脚 ---------- */
 
 .site-footer {
@@ -925,18 +880,8 @@ a:focus {
 }
 
 @media screen and (max-width: 760px) {
-    .quote-section {
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-    .quote-keywords {
-        padding: 1rem 0 0;
-        border-left: none;
-        border-top: 1px solid var(--rule);
-        text-align: left;
-    }
     .home-entry .entry-link {
-        min-height: 20rem;
+        min-height: 9rem;
     }
     /* 窄屏上 .full-measure 会让卡片顶到视口边缘。卡片自己有内边距不要紧，
      * 但引语区之类的纯文字块会贴边，所以窄屏下收回来。 */
