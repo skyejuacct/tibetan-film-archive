@@ -416,7 +416,7 @@
         }).join('') : '<p class="no-results">No entries match these filters.</p>';
 
         return '<section class="page-hero" style="' + bannerStyle(['.78', '.25']) + '"><div class="hero-inner"><div class="hero-text"><h1 class="hero-title">' + esc(listTitle(name)) +
-            '</h1><div class="hero-subtitle"><p>' + esc(setting(list.subtitle)) + '</p></div></div></div></section>' +
+            '</h1></div></div></section>' +
             '<div class="browse-layout full-measure"><aside class="browse-filters"><form class="filter-form" data-list="' + name + '">' +
             list.filters.map(function (f) { return filterGroup(list, f, q); }).join('') + '</form></aside>' +
             '<main class="browse-main">' + main + '</main></div>';
